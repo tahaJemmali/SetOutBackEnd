@@ -20,7 +20,7 @@ mongoose.connect(url,{useNewUrlParser:true,useUnifiedTopology: true},function (e
    }else{
 
        //////////////routing 
-       app.get('/',(req,res) =>{req.send("Welcome to set-out")})
+       app.get('/',(req,res) =>{res.send("Welcome to set-out")})
     //(tasks)
     app.get('/all_tasks',(req,res) =>{taskRoutes.getAllTasksRoute(res)})
     app.post('/add_task',(req,res) =>{taskRoutes.addTaskRoute(req,res)})
