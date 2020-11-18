@@ -7,11 +7,11 @@ module.exports = {
 },
 getAllTasks:async ()=> {
     console.log('get all tasks !')
-    return tasks= await taskSchema.find({}) 
+    return tasks= await taskSchema.find({})
 },
 deleteTaskById:async (id)=>{
     await taskSchema.findByIdAndDelete(id)
-    console.log('task deleted successfully in mongoDB  !')
+    console.log('task deleted successfully in mongoDB !')
 },
 updateTask:async (task,id)=>{
     await taskSchema.findByIdAndUpdate({_id:id},task)
