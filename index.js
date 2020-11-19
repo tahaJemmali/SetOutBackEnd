@@ -37,7 +37,7 @@ mongoose.connect(url,{useNewUrlParser:true,useUnifiedTopology: true},function (e
 
        //Start Web Server
        app.listen(PORT,()=>{
-           console.log('connected to mongodb server, Webserver running on port 3000')
+           console.log('connected to mongodb server, Webserver running on port '+PORT)
        })
    }
 });
