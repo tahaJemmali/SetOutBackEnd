@@ -9,11 +9,8 @@ var app = express();
 app.use(express.json());
 
 const taskRoutes = require('./routes/taskRoutes')
-<<<<<<< Updated upstream
-=======
 const tagRoutes = require('./routes/tagRoutes')
 const projectRoutes = require('./routes/projectRoutes')
->>>>>>> Stashed changes
 
 var bodyParser = require("body-parser");
 app.use(bodyParser.json());
@@ -25,15 +22,6 @@ mongoose.connect(url,{useNewUrlParser:true,useUnifiedTopology: true},function (e
    }else{
 
        //////////////routing 
-       app.get('/',(req,res) =>{res.send("Welcome to set-out")})
-<<<<<<< Updated upstream
-    //(tasks)
-    app.get('/all_tasks',(req,res) =>{taskRoutes.getAllTasksRoute(res)})
-    app.post('/add_task',(req,res) =>{taskRoutes.addTaskRoute(req,res)})
-    app.delete('/delete_task/:id',(req,res) =>{taskRoutes.deleteTaskRoute(req.params.id,res)})
-    app.put('/update_task/:id',(req,res) =>{var reqBody=req.body;var id =req.params.id;taskRoutes.updateTaskRoute(id,reqBody,res)})
-
-=======
         //tasks
         app.get('/all_tasks',(req,res) =>{taskRoutes.getAllTasksRoute(res)})
         app.post('/add_task',(req,res) =>{taskRoutes.addTaskRoute(req,res)})
@@ -44,14 +32,23 @@ mongoose.connect(url,{useNewUrlParser:true,useUnifiedTopology: true},function (e
 
         //project
         app.post('/add_project',(req,res) =>{projectRoutes.addprojectRoute(req,res)})
->>>>>>> Stashed changes
 
 
        //Register | Sing Up
-        app.post('/register',(request,response)=>{userRoutes.Register(request,response)});
+        app.post('/register/:firstName/:lastName/:email/:password/:address/:phone',(request,response)=>{userRoutes.Register(request,response)});
 
        //Login
-       app.post('/login',(request,response)=>{userRoutes.Login(request,response)});
+       app.post('/login/:email/:password',(request,response)=>{userRoutes.Login(request,response)});
+
+       //GetUser
+       app.get('/getUser/:email',(request,response)=>{/*request._custom = request.get('email');*/var email=request.params.email;userRoutes.GetUser(email,request,response)});
+
+       //updateUserEmail
+       app.put('/updateUserEmail/:oldEmail/:newEmail/:password',(request,response)=>{userRoutes.UpdateUserEmail(request,response)});
+
+       //LoginWithFacebook
+       app.post('/LoginWithFacebook/:firstName/:lastName/:email/:signedUpWith/:birthDate/:photo',(request,response)=>{userRoutes.LoginWithFacebook(request,response)});
+
 
        //Start Web Server
        app.listen(PORT,()=>{
