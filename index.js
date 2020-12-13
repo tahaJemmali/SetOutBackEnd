@@ -13,6 +13,7 @@ app.use(express.json());
 const taskRoutes = require('./routes/taskRoutes')
 const tagRoutes = require('./routes/tagRoutes')
 const projectRoutes = require('./routes/projectRoutes')
+const balanceRoutes = require('./routes/balanceRoutes')
 
 var bodyParser = require("body-parser");
 app.use(bodyParser.json());
