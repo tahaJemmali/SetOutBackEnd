@@ -1,5 +1,4 @@
 const projectServie = require('../modules/project_module')
-const var_dump = require('var_dump')
 const tag = require('../entites/tag')
 
 module.exports = {
