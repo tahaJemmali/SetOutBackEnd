@@ -6,8 +6,8 @@ var balanceSchema = Schema({
         type:String,
         required:true
     },
-    amount: {
-        type:Double,
+    balanceAmount: {
+        type:Number,
         required:true
     },
     dateCreation: {
@@ -20,4 +20,6 @@ var balanceSchema = Schema({
     }
 })
 
-module.exports = mongoose.model('balance',projectSchema,'balance')
+
+module.exports = mongoose.model('balance',balanceSchema,'balance')
+

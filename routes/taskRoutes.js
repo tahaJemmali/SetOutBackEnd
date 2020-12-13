@@ -36,8 +36,7 @@ res.status(200).json({
 //delete task route
     deleteTaskRoute: (id,res)=>{
         try {
-            taskServie.deleteTaskById(id)
-            res.status(200).json("task deleted successfully !")
+            taskServie.deleteTaskById(id,res)
         } catch (error) {
             console.log(error)
         }

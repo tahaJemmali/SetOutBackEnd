@@ -1,5 +1,4 @@
 const projectServie = require('../modules/project_module')
-const tag = require('../entites/tag')
 
 module.exports = {
 //get all projects 
@@ -23,8 +22,9 @@ module.exports = {
 //delete project route
     deleteprojectRoute: (id,res)=>{
         try {
-            projectServie.deleteprojectById(id)
-            res.status(200).json("project deleted successfully !")
+
+            projectServie.deleteprojectById(id,res)
+
         } catch (error) {
             console.log(error)
         }

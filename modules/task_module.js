@@ -19,17 +19,27 @@ module.exports = {
 },
 getAllTasks:async ()=> {
     console.log('get all tasks !')
-    return tasks= await taskSchema.find({})
+    return tasks= await taskSchema.find()
 },
 getAllSchedules:async ()=> {
     return tasks= await taskSchema.find({schedule:true})
 },
-deleteTaskById:async (id)=>{
-    await taskSchema.findByIdAndDelete(id)
-    console.log('task deleted successfully in mongoDB !')
+deleteTaskById:async (id,res)=>{
+    try {
+        await taskSchema.findByIdAndDelete(id)
+        resMsg.message="task deleted successfully in mongoDB  !"
+        console.log('task deleted successfully in mongoDB !')
+        res.status(201).json(resMsg)
+    } catch (error) {
+        console.log(error.message)
+        resMsg.message=error.message
+        res.status(404).json(resMsg)
+    }
+   
+   
 },
 updateTask:async (task,id)=>{
     await taskSchema.findByIdAndUpdate({_id:id},task)
     console.log('task updated successfully in mongoDB !')
-}
+},
 }
