@@ -1,9 +1,7 @@
 var PORT = process.env.PORT || 3000;
 var express = require('express');
 const mongoose = require('mongoose');
-mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
 const url = require('./config/urls.json').DataBaseUrl;
 
 
