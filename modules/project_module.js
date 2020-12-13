@@ -9,8 +9,22 @@ module.exports = {
 
         try {
             req.body.tasks.forEach(task =>{
-                task.schedule = false
-                taskServie.updateTask(task,task.id)
+                var taskA = {
+                    id:task._id,
+                    taskName:task.taskName,
+                    importance:task.importance,
+                    enjoyment:task.enjoyment,
+                    note:task.note,
+                    dateCreation:task.dateCreation,
+                    deadline:task.deadline,
+                    reminder:task.reminder,
+                    startTime:task.startTime,
+                    endTime:task.endTime,
+                    schedule:task.schedule
+                }
+                taskA.schedule = false
+                console.log(taskA.id)
+                taskServie.updateTask(taskA,taskA.id)
             } );
             await new projectSchema(req.body).save()
             resMsg.message="project added successfully in mongoDB  !"
