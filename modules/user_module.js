@@ -56,7 +56,7 @@ module.exports = {
         }
     },getUserByEmail:async (email)=> {
         //console.log('get user by email !');
-        return user = await userSchema.find({'email': email});
+        return user = await userSchema.findOne({'email': email});
     },
     updateUser:async (user,id)=>{
         await userSchema.findByIdAndUpdate({_id:id},user)
