@@ -100,38 +100,7 @@ app.put('/updateUserPhoto',(request,response)=>{userRoutes.UpdateUserPhoto(reque
        //updateUserBirthDay
 app.put('/updateUser',(request,response)=>{userRoutes.UpdateUser(request,response)})
 
-const SocketServer = require('websocket').server;
-const server = require('http').createServer((req,res)=>{});
-/*
-server.listen(3001  ,()=>{
-    console.log('connected to websocket server port 3001');
-});*/
-//aa
-const connections = [];
-wsServer = new SocketServer({httpServer:server,limit: "50mb", parameterLimit:500000,
-extended:true,maxHttpBufferSize: 10000000,maxTextMessageSize: 10000000,
-bufferSizeLimit:1000000,maxBufferSizeLimit:1000000,maxReceivedMessageSize:100000,maxReceivedFrameSize:100000});
 
-wsServer = new SocketServer({httpServer:server,maxReceivedFrameSize:1031072,maxReceivedMessageSize:1000 * 1024 * 1024});
-
-wsServer.on('request',(req) => {
-    const connection = req.accept();
-    console.log('new request');
-    connections.push(connection);
-    connection.on('message',(mes)=>{
-        //console.log(mes);
-        commentRoutes.PostComment(mes);
-        connections.forEach(element =>{
-            if (element!= connection){
-                element.sendUTF(mes.utf8Data);
-            }
-        })
-    });
-    connection.on('close',(resCode,des) => {
-        console.log('connection closed');
-        connections.splice(connections.indexOf(connection),1);
-    });
-});
        //Start Web Server
        app.listen(PORT,()=>{
            console.log('connected to mongodb server, Webserver running on port '+PORT)
