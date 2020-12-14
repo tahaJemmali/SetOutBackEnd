@@ -102,10 +102,10 @@ app.put('/updateUser',(request,response)=>{userRoutes.UpdateUser(request,respons
 
 const SocketServer = require('websocket').server;
 const server = require('http').createServer((req,res)=>{});
-
-server.listen(PORT  ,()=>{
+/*
+server.listen(3001  ,()=>{
     console.log('connected to websocket server port 3001');
-});
+});*/
 //aa
 const connections = [];
 wsServer = new SocketServer({httpServer:server,limit: "50mb", parameterLimit:500000,
