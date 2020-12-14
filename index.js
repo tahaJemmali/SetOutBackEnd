@@ -103,7 +103,7 @@ app.put('/updateUser',(request,response)=>{userRoutes.UpdateUser(request,respons
 const SocketServer = require('websocket').server;
 const server = require('http').createServer((req,res)=>{});
 
-server.listen(3001  ,()=>{
+server.listen(PORT  ,()=>{
     console.log('connected to websocket server port 3001');
 });
 
