@@ -3,25 +3,33 @@ const userService = require('../modules/user_module')
 //var ObjectID = mongodb.ObjectID;
 var crypto = require('crypto');
 //var bodyParser = require("body-parser");
-var nodemailer = require('nodemailer');
-
 
 module.exports = {
 
 //register
     Register : (request,response) => {
-        var post_data = request.body;
+        //var post_data = request.body;
+        //console.log("DATA POST :"+post_data);
 
-        var plaint_password = post_data.password;
+        /*var plaint_password = post_data.password;
         var firstName = post_data.firstName;
         var lastName = post_data.lastName;
         var email = post_data.email;
         var address = post_data.address;
-        var phone = post_data.phone;
+        var phone = post_data.phone;*/
+
+        var plaint_password = request.params.password;
+        var firstName = request.params.firstName;
+        var lastName = request.params.lastName;
+        var email = request.params.email;
+        var address = request.params.address;
+        var phone = request.params.phone;
 
 
         console.log(request.params)
 
+       // console.log('password : '+plaint_password);
+       // console.log('Email : '+ email);
 
         userService.getAllUsers().then(function (result) {
             //console.log(result);
@@ -53,6 +61,33 @@ module.exports = {
                 userService.Register(plaint_password,firstName,lastName,email,address,phone,response);
             }
         });
+
+
+        /*userService.getAllUsersByEmail(email).then(function (result) {
+            console.log(result);
+            if (result!=0){
+                allowInsert=false;
+                //response.json('Email already exists');
+                console.log('Email already exists');
+                //return ;
+            }else{
+                userService.Register(post_data,plaint_password,firstName,lastName,email,address,phone);
+            }
+        });*/
+
+        /*userService.getAllUsersByPhone(phone).then(function (result) {
+            console.log(result);
+            if (result!=0){
+                allowInsert=false;
+                response.json('Phone number already exists');
+                console.log('Phone number already exists');
+                return ;
+            }
+        });*/
+
+        /*console.log('le test '+allowInsert);
+        if (allowInsert){
+        }*/
     },
 
     Login : (request,response) => {
@@ -61,11 +96,8 @@ module.exports = {
     //var email = post_data.email;
     //var userPassword = post_data.password;
 
-    /*var email = request.params.email;
-    var userPassword = request.params.password;*/
-
-        var email = post_data.email;
-        var userPassword = post_data.password;
+    var email = request.params.email;
+    var userPassword = request.params.password;
 
 
     //Check if email and password exists
@@ -127,9 +159,9 @@ module.exports = {
 
         var reqBody = request.body;
 
-        var old_email = reqBody.oldEmail;
-        var new_email = reqBody.newEmail;
-        var password = reqBody.password;
+        var old_email = request.params.oldEmail;
+        var new_email = request.params.newEmail;
+        var password = request.params.password;
 
         console.log('here 1 ');
         console.log(old_email);
@@ -221,22 +253,22 @@ module.exports = {
 
         var reqBody = request.body;
 
-        var first_name = reqBody.firstName;
-        var last_name = reqBody.lastName;
-        var email = reqBody.email;
-        var signed_up_with = reqBody.signedUpWith;
-        var birth_date = reqBody.birthDate;
-        var photo = reqBody.photo;
+        var first_name = request.params.firstName;
+        var last_name = request.params.lastName;
+        var email = request.params.email;
+        var signed_up_with = request.params.signedUpWith;
+        var birth_date = request.params.birthDate;
+        var photo = request.params.photo;
 
 
-        /*console.log('FACEBOOK XD');
+        console.log('FACEBOOK XD');
         console.log(first_name);
         console.log(last_name);
         console.log(email);
         console.log(signed_up_with);
         console.log(birth_date);
         console.log(photo);
-        console.log('FACEBOOK XD');*/
+        console.log('FACEBOOK XD');
 
         userService.getAllUsers().then(function (result) {
             var fbAccountExist = false;
@@ -260,167 +292,6 @@ module.exports = {
             }
 
         });
-    }
-
-,GetRecoveryCode:(request,response) =>{
-
-        //console.log("GetRecoveryCode new api");
-	var reqBody = request.body;
-        var email = reqBody.email;
-	var first_name = "";
-	var last_name = "";
-	var code = gfg();
-
-        //response.status(200).json({message:"new facebook account"});
-
-
- userService.getAllUsers().then(function (result) {
-            var validEmail = false;
-            var SetOutEmail = false;
-            result.forEach((user) => {
-                    if(!validEmail){
-                        //console.log(user.email);
-                        if (user.email == email){
-                            validEmail=true;
-			    first_name=user.firstName;
-			    last_name=user.lastName;
-			    if (user.signed_up_with == "Set Out - Life account"){SetOutEmail=true;}
-                        }
-                    }
-                });
-
-     if (!validEmail){
-         response.status(200).json({message:"Email does not exist"});
-         console.log('Email does not exist');
-         return;
-     }
-
-                 if (!SetOutEmail){
-                     response.status(200).json({message:"Please login with your facebook account"});
-                     console.log('Please login with your facebook account');
-                 }
-
-
-                else{
-
-var mailOptions = {
-  from: 'setOutLlife.assistance@gmail.com',
-  to: email,
-  subject: 'SetOut - Life! Validation of your e-mail address',
-  text: 'That was easy!',
-  html: '<!DOCTYPE html>'+
-        '<html><head><title>Validation of your e-mail address</title>'+
-        '</head><body><div>'+
-        '<p>Dear '+first_name+' '+last_name+', There has been a request to reset password or unlock account for your Set Out - Life ID ('+email+'). To continue this process, enter the code below on the validation page:</p>'+
-        '<p>'+code+'</p>'+
-	'<p>Regards,</p>'+
-	'<p>Set Out - Life support</p>'+
-
-        '</div></body></html>'
-};
-
-transporter.sendMail(mailOptions, function(error, info){
-  if (error) {
-    console.log(error);
-  } else {
-    console.log('Email sent: ' + info.response);
-  }
-});
-
-                    response.status(200).json({message:"verification code",code:code,email:email})
-                }
-         
-        });
-        
-    }, ResetPassword:(request,response) =>{
-
-	var reqBody = request.body;
-
-        var email = reqBody.email;
-        var plaint_password = reqBody.password;
-	
-
- userService.getAllUsers().then(function (result) {
-            var validEmail = false;
-	    var current_user;
-            
-	    result.forEach((user) => {
-                    if(!validEmail){
-                        if (user.email == email){
-                            validEmail=true;
-			    current_user=user;
-                        }
-                    }
-                });
-
-                if (!validEmail){
-                    response.status(200).json({message:"Error"});
-                    console.log('Error');
-                }else{
-//console.log('password a hasher :'+plaint_password+' '+email)
-			var hash_data = saltHashPassword(plaint_password);
-        		var password = hash_data.passwordHash; // Save password hash
-        		var salt = hash_data.salt; //save salt
-	         
-        	    current_user.password = password;
-		    current_user.salt = salt;
-
-                    response.status(200).json({message:"Password has been reset"});
-        	    userService.updateUser(current_user,current_user.id);
-                }
-         
-        });
-    },UpdateUserPhoto:(request,response) =>{
-        var reqBody = request.body;
-
-        var email = reqBody.user_email;
-        var photo = reqBody.photo;
-
-        userService.getUserByEmail(email).then(function (result) {
-            result.photo = photo
-            userService.updateUser(result,result.id)
-            response.status(200).json({message:"Done"});
-        });
-    },UpdateUser:(request,response) =>{
-        var reqBody = request.body;
-
-        var email = reqBody.user_email;
-        var birth_date = reqBody.birth_date;
-        var firstName = reqBody.firstName;
-        var lastName = reqBody.lastName;
-        var address = reqBody.address;
-        var phone = reqBody.phone;
-
-            if (birth_date!=null){
-                userService.getUserByEmail(email).then(function (result) {
-                    result.birth_date = Date.parse(birth_date)
-                    userService.updateUser(result,result.id)
-                });
-            }
-
-        if (firstName!=null && lastName!=null){
-            userService.getUserByEmail(email).then(function (result) {
-                result.firstName = firstName
-                result.lastName = lastName
-                userService.updateUser(result,result.id)
-            });
-        }
-
-        if (phone!=null){
-            userService.getUserByEmail(email).then(function (result) {
-                result.phone = phone
-                userService.updateUser(result,result.id)
-            });
-        }
-
-        if (address!=null ){
-            userService.getUserByEmail(email).then(function (result) {
-                result.address = address
-                userService.updateUser(result,result.id)
-            });
-        }
-
-        response.status(200).json({message:"Done"});
     }
 }
 
@@ -449,19 +320,6 @@ function checkHashPassword(userPassword,salt) {
     return passwordData;
 }
 
-function gfg() { 
-            var minm = 100000; 
-            var maxm = 999999; 
-            return Math.floor(Math.random() * (maxm - minm + 1)) + minm; 
-}
-
-var transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'setOutLlife.assistance@gmail.com',
-    pass: 'Setoutlife1234'
-  }
-}); 
 
 
 
