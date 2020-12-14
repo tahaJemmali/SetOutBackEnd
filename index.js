@@ -5,8 +5,11 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 const url = require('./config/urls.json').DataBaseUrl;
+////fahd
 const userRoutes = require('./routes/userRoutes');
-
+const postRoutes = require('./routes/postRoutes');
+const commentRoutes = require('./routes/commentRoutes');
+/////§/
 var app = express();
 app.use(express.json());
 
@@ -16,8 +19,13 @@ const projectRoutes = require('./routes/projectRoutes')
 const balanceRoutes = require('./routes/balanceRoutes')
 
 var bodyParser = require("body-parser");
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+
+///fahd
+//app.use(bodyParser.json());
+//app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.json({limit: '50mb', extended: true}));
+app.use(express.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
+////§/
 
 mongoose.connect(url,{useNewUrlParser:true,useUnifiedTopology: true},function (err,client) {
    if (err){
@@ -49,27 +57,49 @@ mongoose.connect(url,{useNewUrlParser:true,useUnifiedTopology: true},function (e
   
   
   
-   //Register | Sing Up
-    app.post('/register',(request,response)=>{userRoutes.Register(request,response)})
-  
-   //Login
-   app.post('/login',(request,response)=>{userRoutes.Login(request,response)})
-  
-   //GetUser
-   app.get('/getUser/:email',(request,response)=>{var email=request.params.email;userRoutes.GetUser(email,request,response)})
-  
-   //passwordRecovery
-   app.post('/passwordRecovery',(request,response)=>{userRoutes.GetRecoveryCode(request,response)})
-  
-   //passwordReset
-   app.put('/passwordReset',(request,response)=>{userRoutes.ResetPassword(request,response)})
-  
-  
-   //updateUserEmail
-   app.put('/updateUserEmail',(request,response)=>{userRoutes.UpdateUserEmail(request,response)})
-  
-   //LoginWithFacebook
-   app.post('/LoginWithFacebook',(request,response)=>{userRoutes.LoginWithFacebook(request,response)})
+ //Register | Sing Up
+ app.post('/register',(request,response)=>{userRoutes.Register(request,response)})
+
+ //Login
+ app.post('/login',(request,response)=>{userRoutes.Login(request,response)})
+
+ //GetUser
+ app.get('/getUser/:email',(request,response)=>{var email=request.params.email;userRoutes.GetUser(email,request,response)})
+
+ //passwordRecovery
+ app.post('/passwordRecovery',(request,response)=>{userRoutes.GetRecoveryCode(request,response)})
+
+ //passwordReset
+ app.put('/passwordReset',(request,response)=>{userRoutes.ResetPassword(request,response)})
+
+
+ //updateUserEmail
+ app.put('/updateUserEmail',(request,response)=>{userRoutes.UpdateUserEmail(request,response)})
+
+ //LoginWithFacebook
+ app.post('/LoginWithFacebook',(request,response)=>{userRoutes.LoginWithFacebook(request,response)})
+
+ //addPost
+ app.post('/addPost',(request,response)=>{postRoutes.AddPost(request,response)})
+
+ //getPosts
+ app.get('/getPosts',(request,response)=>{postRoutes.GetPosts(request,response)})
+
+ //likePost
+ app.put('/likePost',(request,response)=>{postRoutes.LikePost(request,response)})
+
+  //unListPost
+  app.put('/unLikePost',(request,response)=>{postRoutes.UnLikePost(request,response)})
+
+  //getComments
+  app.get('/getComments/:post_id',(request,response)=>{var post_id=request.params.post_id;postRoutes.GetComments(post_id,request,response)})
+
+//updateUserPhoto
+app.put('/updateUserPhoto',(request,response)=>{userRoutes.UpdateUserPhoto(request,response)})
+
+       //updateUserBirthDay
+       app.put('/updateUser',(request,response)=>{userRoutes.UpdateUser(request,response)})
+
   
        //Start Web Server
        app.listen(PORT,()=>{
