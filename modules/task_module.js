@@ -7,8 +7,11 @@ module.exports = {
     addTask: async (task,res) => {
 
         try {
-            await new taskSchema(task).save()
-            resMsg.message="task added successfully in mongoDB  !"
+            await new taskSchema(task).save(function(err,t) {
+                console.log(t.id);
+                resMsg.message=t.id
+             });
+            
             console.log('task added successfully in mongoDB  !')
             res.status(201).json(resMsg)
         } catch (error) {
