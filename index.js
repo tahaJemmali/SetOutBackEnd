@@ -50,7 +50,8 @@ mongoose.connect(url,{useNewUrlParser:true,useUnifiedTopology: true},function (e
     app.post('/add_project',(req,res) =>{projectRoutes.addprojectRoute(req,res)})
     app.get('/all_projects',(req,res) =>{projectRoutes.getAllprojectsRoute(res)})
     app.delete('/delete_project/:id',(req,res) =>{projectRoutes.deleteprojectRoute(req.params.id,res)})
-  
+    app.put('/update_project/:id',(req,res) =>{var reqBody=req.body;var id =req.params.id;projectRoutes.updateprojectRoute(id,reqBody,res)})
+
    //tags
    app.post('/add_tag',(req,res) =>{tagRoutes.addTagRoute(req,res)})
    app.get('/all_tags',(req,res) =>{tagRoutes.getAllTagsRoute(res)})
