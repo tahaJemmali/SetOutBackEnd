@@ -44,19 +44,7 @@ res.status(200).json({
 //update task route
     updateTaskRoute:(id,reqBody,res)=>{
         try {
-            var task = {
-                taskName:reqBody.taskName,
-                importance:reqBody.importance,
-                enjoyment:reqBody.enjoyment,
-                note:reqBody.note,
-                dateCreation:reqBody.dateCreation,
-                deadline:reqBody.deadline,
-                reminder:reqBody.reminder,
-                startTime:reqBody.startTime,
-                endTime:reqBody.endTime,
-                schedule:reqBody.schedule
-            }
-            taskServie.updateTask(task,id)
+            taskServie.updateTask(reqBody,id)
             res.status(200).json("task updated successfully !")
         } catch (error) {
             console.log(error)
