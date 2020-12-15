@@ -10,10 +10,10 @@ module.exports = {
             await new taskSchema(task).save(function(err,t) {
                 console.log(t.id);
                 resMsg.message=t.id
+                console.log('task added successfully in mongoDB  !')
+                res.status(201).json(resMsg)
              });
             
-            console.log('task added successfully in mongoDB  !')
-            res.status(201).json(resMsg)
         } catch (error) {
             console.log(error.message)
             resMsg.message=error.message
