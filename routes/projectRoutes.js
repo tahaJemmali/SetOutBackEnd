@@ -32,8 +32,7 @@ module.exports = {
 //update project route
     updateprojectRoute:(id,reqBody,res)=>{
         try {
-            projectServie.updateproject(reqBody,id)
-            res.status(200).json("project updated successfully !")
+            projectServie.updateproject(reqBody,id,res)
         } catch (error) {
             console.log(error)
         }
