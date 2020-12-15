@@ -43,7 +43,7 @@ deleteprojectById:async (id,res)=>{
     
     console.log('project deleted successfully in mongoDB !')
 },
-updateproject:async (project,id)=>{
+updateproject:async (project,id,res)=>{
     try {
         await projectSchema.findByIdAndUpdate({_id:id},project)
         resMsg.message="project updated successfully in mongoDB !"
