@@ -11,7 +11,7 @@ const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 /////§/
 var app = express();
-app.use(express.json());
+//app.use(express.json());
 
 const taskRoutes = require('./routes/taskRoutes')
 const tagRoutes = require('./routes/tagRoutes')

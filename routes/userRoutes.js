@@ -131,6 +131,12 @@ module.exports = {
         var new_email = reqBody.newEmail;
         var password = reqBody.password;
 
+        var birth_date = reqBody.birth_date;
+        var firstName = reqBody.firstName;
+        var lastName = reqBody.lastName;
+        var address = reqBody.address;
+        var phone = reqBody.phone;
+
         console.log('here 1 ');
         console.log(old_email);
         console.log(new_email);
@@ -206,10 +212,16 @@ module.exports = {
 
             //}
             if (allowUpdate && validNewEmail && validOldEmail){
+                current_user.email = new_email;
+                if (firstName!='' && lastName!='' && phone != '' && address != ''){
+                    current_user.firstName = firstName
+                    current_user.lastName = lastName
+                    current_user.phone = phone
+                    current_user.address = address
+                }
+                userService.updateUser(current_user,current_user.id);
                 response.status(200).json({message:"Email updated"});
                 console.log("Email updated");
-                current_user.email = new_email;
-                userService.updateUser(current_user,current_user.id);
                 // var user = userService.getUserByEmail(email)
                 //userService.Login(response);
             }
@@ -390,7 +402,34 @@ transporter.sendMail(mailOptions, function(error, info){
         var lastName = reqBody.lastName;
         var address = reqBody.address;
         var phone = reqBody.phone;
+        //var id = reqBody.id;
 
+        //var test=true;
+
+        //console.log("id :"+id)
+        //console.log("email :"+email)
+        //console.log(birth_date)
+        //console.log("firstName :"+firstName)
+        //console.log("lastName :"+lastName)
+        //console.log("address :"+address)
+        //console.log("phone :"+phone)
+
+        
+        /*if (firstName!='' && lastName!='' && phone != '' && address != ''){
+            console.log("entered")
+            test=false;
+            userService.getUserById(id).then(function (result) {
+                result.email = email
+                result.firstName = firstName
+                result.lastName = lastName
+                result.phone = phone
+                result.address = address
+                userService.updateUser(result,result.id)
+                response.status(200).json({message:"Done"});
+            });
+        }*/
+
+        //if(test){
             if (birth_date!=null){
                 userService.getUserByEmail(email).then(function (result) {
                     result.birth_date = Date.parse(birth_date)
@@ -421,7 +460,8 @@ transporter.sendMail(mailOptions, function(error, info){
         }
 
         response.status(200).json({message:"Done"});
-    }
+    //}
+}
 }
 
 var genRandomString = function(length){
