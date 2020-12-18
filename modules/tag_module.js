@@ -15,9 +15,9 @@ module.exports = {
             res.status(404).json(resMsg)
         }
 },
-getAllTags:async ()=> {
+getAllTags:async (userid)=> {
     console.log('get all tags !')
-    return tasks= await tagSchema.find({})
+    return tasks= await tagSchema.find({user:userid})
 },
 deleteTagById:async (id)=>{
     await tagSchema.findByIdAndDelete(id)

@@ -2,15 +2,15 @@ const taskServie = require('../modules/task_module')
 
 module.exports = {
 //get all tasks 
-    getAllTasksRoute:(res) =>{
-    taskServie.getAllTasks().then(function (result) {
+    getAllTasksRoute:(res,userid) =>{
+    taskServie.getAllTasks(userid).then(function (result) {
     res.status(200).json({
         message:"all tasks",
         tasks:result})
     })
 },//get all schedules 
-getAllSchedules:(res) =>{
-taskServie.getAllSchedules().then(function (result) {
+getAllSchedules:(res,userid) =>{
+taskServie.getAllSchedules(userid).then(function (result) {
 res.status(200).json({
     message:"all schedules",
     tasks:result})
@@ -28,7 +28,8 @@ res.status(200).json({
             reminder:req.body.reminder,
             startTime:req.body.startTime,
             endTime:req.body.endTime,
-            schedule:req.body.schedule
+            schedule:req.body.schedule,
+            user:req.body.user
         }
         taskServie.addTask(task,res)
         

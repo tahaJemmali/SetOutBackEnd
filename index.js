@@ -34,27 +34,27 @@ mongoose.connect(url,{useNewUrlParser:true,useUnifiedTopology: true},function (e
 
     app.get('/',(req,res) =>{res.send("Welcome to set-out")})
     //tasks
-    app.get('/all_tasks',(req,res) =>{taskRoutes.getAllTasksRoute(res)})
+    app.get('/all_tasks/:userid',(req,res) =>{var userid =req.params.userid;taskRoutes.getAllTasksRoute(res,userid)})
     app.post('/add_task',(req,res) =>{taskRoutes.addTaskRoute(req,res)})
     app.delete('/delete_task/:id',(req,res) =>{taskRoutes.deleteTaskRoute(req.params.id,res)})
     app.put('/update_task/:id',(req,res) =>{var reqBody=req.body;var id =req.params.id;taskRoutes.updateTaskRoute(id,reqBody,res)})
     //schedule
-    app.get('/all_schedules',(req,res) =>{taskRoutes.getAllSchedules(res)})
+    app.get('/all_schedules/:userid',(req,res) =>{var userid =req.params.userid;taskRoutes.getAllSchedules(res,userid)})
     
     //balance
     app.post('/add_balance',(req,res) =>{balanceRoutes.addbalanceRoute(req,res)})
-    app.get('/all_balances',(req,res) =>{balanceRoutes.getAllbalancesRoute(res)})
+    app.get('/all_balances/:userid',(req,res) =>{var userid =req.params.userid;balanceRoutes.getAllbalancesRoute(res,userid)})
     app.delete('/delete_balance/:id',(req,res) =>{balanceRoutes.deletebalanceRoute(req.params.id,res)})
   
     //project
     app.post('/add_project',(req,res) =>{projectRoutes.addprojectRoute(req,res)})
-    app.get('/all_projects',(req,res) =>{projectRoutes.getAllprojectsRoute(res)})
+    app.get('/all_projects/:userid',(req,res) =>{var userid =req.params.userid;projectRoutes.getAllprojectsRoute(res,userid)})
     app.delete('/delete_project/:id',(req,res) =>{projectRoutes.deleteprojectRoute(req.params.id,res)})
     app.put('/update_project/:id',(req,res) =>{var reqBody=req.body;var id =req.params.id;projectRoutes.updateprojectRoute(id,reqBody,res)})
 
    //tags
    app.post('/add_tag',(req,res) =>{tagRoutes.addTagRoute(req,res)})
-   app.get('/all_tags',(req,res) =>{tagRoutes.getAllTagsRoute(res)})
+   app.get('/all_tags/:userid',(req,res) =>{var userid =req.params.userid;tagRoutes.getAllTagsRoute(res,userid)})
   
   
   

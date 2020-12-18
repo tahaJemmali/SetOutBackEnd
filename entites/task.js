@@ -31,6 +31,10 @@ var taskSchema = Schema({
     tag:{
         type:Schema.Types.ObjectId,
         ref:"tag"  
+    },
+    user:{
+        type:Schema.Types.ObjectId,
+        ref:"user"  
     }
 })
 

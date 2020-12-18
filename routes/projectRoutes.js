@@ -2,8 +2,8 @@ const projectServie = require('../modules/project_module')
 
 module.exports = {
 //get all projects 
-    getAllprojectsRoute:(res) =>{
-    projectServie.getAllprojects().then(function (result) {
+    getAllprojectsRoute:(res,userid) =>{
+    projectServie.getAllprojects(userid).then(function (result) {
     res.status(200).json({
         message:"all projects",
         projects:result})

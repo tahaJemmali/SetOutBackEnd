@@ -3,8 +3,8 @@ const tagService = require('../modules/tag_module')
 
 module.exports = {
 //get all tags 
-    getAllTagsRoute:(res) =>{
-        tagService.getAllTags().then(function (result) {
+    getAllTagsRoute:(res,userid) =>{
+        tagService.getAllTags(userid).then(function (result) {
     res.status(200).json({
         message:"all tags",
         tags:result})
@@ -14,7 +14,8 @@ module.exports = {
     addTagRoute:(req,res)=>{
         var tag = {
             tagName:req.body.tagName,
-            color:req.body.color
+            color:req.body.color,
+            user:req.body.user
         }
         try{
 

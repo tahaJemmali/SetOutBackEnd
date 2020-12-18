@@ -20,12 +20,12 @@ module.exports = {
             res.status(404).json(resMsg)
         }
 },
-getAllTasks:async ()=> {
+getAllTasks:async (userid)=> {
     console.log('get all tasks !')
-    return tasks= await taskSchema.find()
+    return tasks= await taskSchema.find({user:userid})
 },
-getAllSchedules:async ()=> {
-    return tasks= await taskSchema.find({schedule:true})
+getAllSchedules:async (userid)=> {
+    return tasks= await taskSchema.find({user:userid,schedule:true})
 },
 deleteTaskById:async (id,res)=>{
     try {

@@ -17,12 +17,12 @@ module.exports = {
             res.status(404).json(resMsg)
         }
 },
-getAllbalances:async ()=> {
+getAllbalances:async (userid)=> {
     console.log('get all balances !')
-    return balances= await balanceSchema.find({}).populate("tasks").populate("tag")
+    return balances= await balanceSchema.find({user:userid}).populate("tasks").populate("tag")
 },
-getAllSchedules:async ()=> {
-    return balances= await balanceSchema.find({schedule:true})
+getAllSchedules:async (userid)=> {
+    return balances= await balanceSchema.find({user:userid,schedule:true})
 },
 deletebalanceById:async (id,res)=>{
     try {

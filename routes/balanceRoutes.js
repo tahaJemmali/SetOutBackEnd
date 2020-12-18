@@ -2,8 +2,8 @@ const balanceServie = require('../modules/balance_module')
 
 module.exports = {
 //get all balances 
-    getAllbalancesRoute:(res) =>{
-    balanceServie.getAllbalances().then(function (result) {
+    getAllbalancesRoute:(res,userid) =>{
+    balanceServie.getAllbalances(userid).then(function (result) {
     res.status(200).json({
         message:"all balances",
         balances:result})

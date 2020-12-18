@@ -22,12 +22,9 @@ module.exports = {
             res.status(404).json(resMsg)
         }
 },
-getAllprojects:async ()=> {
+getAllprojects:async (userid)=> {
     console.log('get all projects !')
-    return projects= await projectSchema.find({}).populate("tasks").populate("tag")
-},
-getAllSchedules:async ()=> {
-    return projects= await projectSchema.find({schedule:true})
+    return projects= await projectSchema.find({user:userid}).populate("tasks").populate("tag")
 },
 
 deleteprojectById:async (id,res)=>{
