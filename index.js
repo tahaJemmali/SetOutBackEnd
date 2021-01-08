@@ -11,8 +11,7 @@ const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 /////§/
 var app = express();
-app.use((req, res) => res.sendFile(INDEX, { root: __dirname }))
-.listen(PORT, () => console.log(`Listening on ${PORT}`));
+app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 //app.use(express.json());
 
 const taskRoutes = require('./routes/taskRoutes')
@@ -104,7 +103,7 @@ app.put('/updateUserPhoto',(request,response)=>{userRoutes.UpdateUserPhoto(reque
 app.put('/updateUser',(request,response)=>{userRoutes.UpdateUser(request,response)})
 
 const { Server } = require('ws');
-       const wsServer = new Server({server:app});
+       const wsServer = new Server({app});
 
 const connections = [];
 
