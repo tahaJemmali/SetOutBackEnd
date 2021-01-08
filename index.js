@@ -100,7 +100,52 @@ app.put('/updateUserPhoto',(request,response)=>{userRoutes.UpdateUserPhoto(reque
 
        //updateUserBirthDay
 app.put('/updateUser',(request,response)=>{userRoutes.UpdateUser(request,response)})
+const WebSocket = require('ws');
+       const wsServer = new WebSocket.Server({ server: app ,maxReceivedFrameSize:1031072,maxReceivedMessageSize:1000 * 1024 * 1024 });
 
+
+const connections = [];
+
+//wsServer = new SocketServer({httpServer:server,maxReceivedFrameSize:1031072,maxReceivedMessageSize:1000 * 1024 * 1024});
+
+wsServer.on('connection',(req) => {
+    //console.log(req);
+   // const connection = req;//.accept();
+    console.log('new request');
+    connections.push(req);
+
+    req.on('message', function(mes) {
+
+        //wss.broadcast(JSON.stringify(test_message));
+
+        /*console.log(mes);
+        console.log(mes[1]);
+        console.log(mes.post_id);
+        console.log(mes["post_id"]);
+        console.log(mes[0]["current_user_email"]);*/
+        commentRoutes.PostComment(mes);
+        connections.forEach(element =>{
+            if (element!= req){
+                element.send(mes);
+            }
+        })
+    });
+
+    /*wsServer.on('message',(mes)=>{
+        console.log(mes);
+        commentRoutes.PostComment(mes);
+        connections.forEach(element =>{
+            if (element!= connection){
+                element.sendUTF(mes.utf8Data);
+            }
+        })
+    });*/
+
+    req.on('close',(resCode,des) => {
+        console.log('connection closed');
+        connections.splice(connections.indexOf(req),1);
+    });
+});
 
        //Start Web Server
        app.listen(PORT,()=>{
