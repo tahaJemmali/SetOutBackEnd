@@ -11,6 +11,9 @@ const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 /////§/
 var app = express();
+app.listen(PORT,()=>{
+    console.log('connected to mongodb server, Webserver running on port '+PORT)
+})
 //app.use(express.json());
 
 const taskRoutes = require('./routes/taskRoutes')
@@ -100,9 +103,9 @@ app.put('/updateUserPhoto',(request,response)=>{userRoutes.UpdateUserPhoto(reque
 
        //updateUserBirthDay
 app.put('/updateUser',(request,response)=>{userRoutes.UpdateUser(request,response)})
-const WebSocket = require('ws');
-       const wsServer = new WebSocket.Server({ server: app ,maxReceivedFrameSize:1031072,maxReceivedMessageSize:1000 * 1024 * 1024 });
 
+const { Server } = require('ws');
+       const wsServer = new Server({ server: app ,maxReceivedFrameSize:1031072,maxReceivedMessageSize:1000 * 1024 * 1024 });
 
 const connections = [];
 
@@ -148,9 +151,10 @@ wsServer.on('connection',(req) => {
 });
 
        //Start Web Server
-       app.listen(PORT,()=>{
+     /*  app.listen(PORT,()=>{
            console.log('connected to mongodb server, Webserver running on port '+PORT)
-       })
+       })*/
    }
-});
+}
+);
 
