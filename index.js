@@ -104,7 +104,7 @@ app.put('/updateUserPhoto',(request,response)=>{userRoutes.UpdateUserPhoto(reque
 app.put('/updateUser',(request,response)=>{userRoutes.UpdateUser(request,response)})
 
 const { Server } = require('ws');
-       const wsServer = new Server({app});
+       const wsServer = new Server({server:app});
 
 const connections = [];
 
